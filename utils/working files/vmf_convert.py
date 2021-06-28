@@ -41,8 +41,6 @@ with open(convertedFilename, 'w') as convFile:
                 convFile.write(newLine)
             elif "uniformscale" in line:
                 oldVar = splitLine[last]
-                newLine = line.replace("uniformscale", "scales")
-                newLine = line.replace(str(oldVar), str(oldVar) + " " + str(oldVar) + " " + str(oldVar))
-                convFile.write(newLine)
+                convFile.write('	"scales" "' + str(oldVar) + ' ' + str(oldVar) + ' ' + str(oldVar) + '"\n')
             else:
                 convFile.write(line)
