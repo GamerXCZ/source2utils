@@ -11,6 +11,7 @@ Below is a list of branches that have been tested with the tool (with the HL:A B
 - Source Filmmaker Branch (most content from this build is stable and should work nicely.)
 - Half-Life: 2 (character models and some others crash while trying to compile, but then finish compiling fine)
 - Counter-Strike: Source
+- Counter-Strike: Global Offensive (untested for player models and weapon models)
 - Black Mesa Source (same as HL2)
 - Team Fortress 2 (Models compile fine, but HWM characters are pretty well broken)
 
@@ -23,9 +24,7 @@ Below is a list of branches that DON'T work with this tool (with the HL:A Bootle
 
 2. Download the latest release and extract to anywhere.
 
-3. Download and set up the [Half-Life Alyx Bootleg Tools](https://github.com/thenayr/Half-Life-Alyx-SDK)
-
-4. Run the scripts as instructed below.
+3. Run the scripts as instructed below.
 
 ## vmt_to_vmat.py
 
@@ -51,6 +50,16 @@ Once that's done, open your tools and it will hang for a minute. I'd recommend l
 
 An older attempt at converting models before I figured out how to directly import .mdl files.
 You can use this as a base if you want to import the source files manually.
+
+## vmf_convert.py
+
+(WiP)
+
+cmd command: python vmf_convert.py "C:\path\to\vmf\file.vmf"
+Will be created new map file, so the used .vmf file will not be modified.
+
+Script trying to fix the materials scaling. (it doesn't work quite well)
+Fixes models scaling
 
 ## Troubleshooting
 ##### *I got an error when converting materials! Something about not being able to convert something to something!*
