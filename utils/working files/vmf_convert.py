@@ -73,5 +73,21 @@ with open(convertedFilename, 'w') as convFile:
                 newLine = line.replace("foglerptime", "FadeSpeed")
                 print('Fixing "foglerptime" property...')
                 convFile.write(newLine)
+            elif "env_sun" in line:
+                newLine = line.replace("env_sun", "env_sky")
+                print('env_sun -> env_sky')
+                convFile.write(newLine)
+            elif "info_player_terrorist" in line:
+                newLine = line.replace("info_player_terrorist", "info_player_start")
+                print('info_player_terrorist -> info_player_start')
+                convFile.write(newLine)
+            elif "info_player_counterterrorist" in line:
+                newLine = line.replace("info_player_counterterrorist", "info_player_start")
+                print('info_player_counterterrorist -> info_player_start')
+                convFile.write(newLine)
+            elif "game_player_equip" in line:
+                newLine = line.replace("game_player_equip", "info_hlvr_equip_player")
+                print('game_player_equip -> info_hlvr_equip_player')
+                convFile.write(newLine)
             else:
                 convFile.write(line)
