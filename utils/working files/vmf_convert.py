@@ -27,22 +27,51 @@ with open(convertedFilename, 'w') as convFile:
             
             if "uaxis" in line:
                 oldVar = splitLine[last]
-                print(oldVar)
                 newVar = float(oldVar) * 32
-                print(newVar)
+                print('uaxis:' + str(oldVar) + '->' + str(newVar))
                 newLine = line.replace(str(oldVar), str(newVar))
                 convFile.write(newLine)
             elif "vaxis" in line:
                 oldVar = splitLine[last]
-                print(oldVar)
                 newVar = float(oldVar) * 32
-                print(newVar)
+                print('vaxis:' + str(oldVar) + '->' + str(newVar))
                 newLine = line.replace(str(oldVar), str(newVar))
                 convFile.write(newLine)
             elif "uniformscale" in line:
                 oldVar = splitLine[last]
                 newLine = line.replace("uniformscale", "scales")
                 newLine = newLine.replace(str(oldVar), str(oldVar) + " " + str(oldVar) + " " + str(oldVar))
+                convFile.write(newLine)
+            elif "fog_volume" in line:
+                newLine = line.replace("fog_volume", "env_volumetric_fog_volume")
+                print('fog_volume -> env_volumetric_fog_volume')
+                convFile.write(newLine)
+            elif "env_fog_controller" in line:
+                newLine = line.replace("env_fog_controller", "env_volumetric_fog_controller")
+                print('env_fog_controller -> env_volumetric_fog_controller')
+                convFile.write(newLine)
+            elif "fogend" in line:
+                newLine = line.replace("fogend", "FadeInEnd")
+                print('Fixing "fogend" property...')
+                convFile.write(newLine)
+            elif "fogstart" in line:
+                newLine = line.replace("fogstart", "FadeInStart")
+                print('Fixing "fogstart" property...')
+                convFile.write(newLine)
+            elif "fogmaxdensity" in line:
+                newLine = line.replace("fogmaxdensity", "FogStrength")
+                print('Fixing "fogmaxdensity" property...')
+                convFile.write(newLine)
+            elif "fogenable" in line:
+                oldVar = splitLine[last]
+                newVar = int(oldVar) ^ 1
+                newLine = line.replace("fogenable", "StartDisabled")
+                print('Fixing "fogenable" property...')
+                newLine = newLine.replace(str(oldVar), str(newVar))
+                convFile.write(newLine)
+            elif "foglerptime" in line:
+                newLine = line.replace("foglerptime", "FadeSpeed")
+                print('Fixing "foglerptime" property...')
                 convFile.write(newLine)
             else:
                 convFile.write(line)
