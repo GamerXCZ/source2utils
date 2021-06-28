@@ -58,10 +58,9 @@ You can use this as a base if you want to import the source files manually.
 cmd command: python vmf_convert.py "C:\path\to\vmf\file.vmf"
 
 Will be created new map file, so the used .vmf file will not be modified.
-
-Script trying to fix the materials scaling. (it doesn't work quite well)
-
-Fixes models scaling
+- Script trying to fix the materials scaling. (it doesn't work quite well)
+- Fixes models scaling.
+- Partial repair of FOG entities.
 
 ## Troubleshooting
 ##### *I got an error when converting materials! Something about not being able to convert something to something!*
