@@ -89,5 +89,9 @@ with open(convertedFilename, 'w') as convFile:
                 newLine = line.replace("game_player_equip", "info_hlvr_equip_player")
                 print('game_player_equip -> info_hlvr_equip_player')
                 convFile.write(newLine)
+            elif "info_teleport_destination" in line:
+                newLine = line.replace("info_teleport_destination", "point_teleport")
+                print('info_teleport_destination -> point_teleport')
+                convFile.write(newLine)
             else:
                 convFile.write(line)
