@@ -89,6 +89,14 @@ with open(convertedFilename, 'w') as convFile:
                 newLine = line.replace("info_player_counterterrorist", "info_player_start")
                 print('info_player_counterterrorist -> info_player_start')
                 convFile.write(newLine)
+            elif "\"info_player_teamspawn\"" in line:
+                newLine = line.replace("info_player_teamspawn", "info_player_start")
+                print('info_player_teamspawn -> info_player_start')
+                convFile.write(newLine)
+            elif "\"info_player_deathmatch\"" in line:
+                newLine = line.replace("info_player_deathmatch", "info_player_start")
+                print('info_player_deathmatch -> info_player_start')
+                convFile.write(newLine)
             elif "\"game_player_equip\"" in line:
                 newLine = line.replace("game_player_equip", "info_hlvr_equip_player")
                 print('game_player_equip -> info_hlvr_equip_player')
@@ -100,22 +108,22 @@ with open(convertedFilename, 'w') as convFile:
             elif "\"_inner_cone\"" in line:
                 convFile.write(line)
                 newLine = line.replace("_inner_cone", "original_innerconeangle")
-                print('Fixing "_inner_cone" property...')
+                print('Saving "_inner_cone" property...')
                 convFile.write(newLine)
             elif "\"_cone\"" in line:
                 convFile.write(line)
                 newLine = line.replace("_cone", "original_outerconeangle")
-                print('Fixing "_cone" property...')
+                print('Saving "_cone" property...')
                 convFile.write(newLine)
             elif "\"_linear_attn\"" in line:
                 convFile.write(line)
                 newLine = line.replace("_linear_attn", "original_attenuation1")
-                print('Fixing "_linear_attn" property...')
+                print('Saving "_linear_attn" property...')
                 convFile.write(newLine)
             elif "\"_quadratic_attn\"" in line:
                 convFile.write(line)
                 newLine = line.replace("_quadratic_attn", "original_attenuation2")
-                print('Fixing "_quadratic_attn" property...')
+                print('Saving "_quadratic_attn" property...')
                 convFile.write(newLine)
             elif "\"_lightHDR\"" in line:
                 print('Skipping "_lightHDR" property...')
@@ -124,7 +132,7 @@ with open(convertedFilename, 'w') as convFile:
             elif "\"_light\"" in line:
                 convFile.write(line)
                 oldVar = line.replace('"', '').replace("'", "").replace("_light", "").replace("	 ", "").replace("\n", "")
-                print('Fixing "_light" property...')
+                print('Saving "_light" property...')
                 R, G, B, A = oldVar.split(' ', 4)
                 newA = float(A) * 0.0039215686274509803921568627451
                 newLine = line.replace("_light", "original_color")
@@ -141,5 +149,66 @@ with open(convertedFilename, 'w') as convFile:
                     print('Fixing "spawnflags" property for ' + classnameVar + ' entity...')
                     newLine = newLine.replace(str(oldVar), str(newVar))
                     convFile.write(newLine)
+            elif "\"mingpulevel\"" in line:
+                print('Skipping "mingpulevel" property...')
+            elif "\"mincpulevel\"" in line:
+                print('Skipping "mincpulevel" property...')
+            elif "\"maxgpulevel\"" in line:
+                print('Skipping "maxgpulevel" property...')
+            elif "\"maxcpulevel\"" in line:
+                print('Skipping "maxcpulevel" property...')
+            elif "\"disableX360\"" in line:
+                print('Skipping "disableX360" property...')
+            elif "\"fademaxdist\"" in line:
+                convFile.write(line)
+                newLine = line.replace("fademaxdist", "original_fademaxdist")
+                print('Saving "fademaxdist" property...')
+                convFile.write(newLine)
+            elif "\"fademindist\"" in line:
+                convFile.write(line)
+                newLine = line.replace("fademindist", "original_fademindist")
+                print('Saving "fademindist" property...')
+                convFile.write(newLine)
+            elif "\"solid\"" in line:
+                convFile.write(line)
+                newLine = line.replace("solid", "original_solid")
+                print('Saving "solid" property...')
+                convFile.write(newLine)
+            elif "\"prop_loot_crate\"" in line:
+                newLine = line.replace("prop_loot_crate", "item_item_crate")
+                print('prop_loot_crate -> item_item_crate')
+                convFile.write(newLine)
+            elif "\"prop_metal_crate\"" in line:
+                newLine = line.replace("prop_metal_crate", "item_item_crate")
+                print('prop_metal_crate -> item_item_crate')
+                convFile.write(newLine)
+            elif "\"prop_money_crate\"" in line:
+                newLine = line.replace("prop_money_crate", "item_item_crate")
+                print('prop_money_crate -> item_item_crate')
+                convFile.write(newLine)
+            elif "\"prop_paradrop_crate\"" in line:
+                newLine = line.replace("prop_paradrop_crate", "item_item_crate")
+                print('prop_paradrop_crate -> item_item_crate')
+                convFile.write(newLine)
+            elif "\"point_dz_weaponspawn\"" in line:
+                newLine = line.replace("point_dz_weaponspawn", "item_item_crate")
+                print('point_dz_weaponspawn -> item_item_crate')
+                convFile.write(newLine)
+            elif "\"point_dz_itemspawn\"" in line:
+                newLine = line.replace("point_dz_itemspawn", "item_item_crate")
+                print('point_dz_itemspawn -> item_item_crate')
+                convFile.write(newLine)
+            elif "\"weapon_healthshot\"" in line:
+                newLine = line.replace("weapon_healthshot", "item_healthvial")
+                print('weapon_healthshot -> item_healthvial')
+                convFile.write(newLine)
+            elif "\"dronegun\"" in line:
+                newLine = line.replace("dronegun", "npc_turret_floor")
+                print('dronegun -> npc_turret_floor')
+                convFile.write(newLine)
+            elif "\"point_dz_dronegun\"" in line:
+                newLine = line.replace("dronegun", "npc_turret_floor")
+                print('point_dz_dronegun -> npc_turret_floor')
+                convFile.write(newLine)
             else:
                 convFile.write(line)
