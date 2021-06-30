@@ -41,7 +41,7 @@ with open(convertedFilename, 'w') as convFile:
 			
             if "\"classname\"" in line:
                 classnameVar = splitLine[last]
-                if "\"shadow_control\"" in line or "\"env_detail_controller\"" in line or "\"postprocess_controller\"" in line or "\"func_areaportal\"" in line or "\"func_areaportalwindow\"" in line:
+                if "\"func_no_defuse\"" in line or "\"chicken\"" in line or "\"fish\"" in line or "\"func_fish_pool\"" in line or "\"shadow_control\"" in line or "\"env_detail_controller\"" in line or "\"postprocess_controller\"" in line or "\"func_areaportal\"" in line or "\"func_areaportalwindow\"" in line:
                     print(' --> Deleting ' + str(classnameVar) + ' entity.')
                     deletingProces = 1
                     savingProces = 0
@@ -237,8 +237,40 @@ with open(convertedFilename, 'w') as convFile:
                 print('dronegun -> npc_turret_floor')
                 convFile.write(newLine)
             elif "\"point_dz_dronegun\"" in line:
-                newLine = line.replace("dronegun", "npc_turret_floor")
+                newLine = line.replace("point_dz_dronegun", "npc_turret_floor")
                 print('point_dz_dronegun -> npc_turret_floor')
                 convFile.write(newLine)
+            elif "\"func_conveyor\"" in line:
+                newLine = line.replace("func_conveyor", "func_brush")
+                print('func_conveyor -> func_brush')
+                convFile.write(newLine)
+            elif "\"func_detail_blocker\"" in line:
+                newLine = line.replace("func_detail_blocker", "func_brush")
+                print('func_detail_blocker -> func_brush')
+                convFile.write(newLine)
+            elif "\"func_illusionary\"" in line:
+                newLine = line.replace("func_illusionary", "func_brush")
+                print('func_illusionary -> func_brush')
+                convFile.write(newLine)
+                newLine = line.replace("classname", "solid")
+                newLine = newLine.replace("func_illusionary", "0")
+                convFile.write(newLine)
+            elif "\"func_ladderendpoint\"" in line:
+                newLine = line.replace("func_ladderendpoint", "func_useableladder")
+                print('func_ladderendpoint -> func_useableladder')
+                convFile.write(newLine)
+            elif "\"startsound\"" in line:
+                if "func_movelinear" in classnameVar:
+                    newLine = line.replace("startsound", "StartSound")
+                    print('Fixing "startsound" property for ' + classnameVar + ' entity...')
+                    convFile.write(newLine)
+            elif "\"stopsound\"" in line:
+                if "func_movelinear" in classnameVar:
+                    newLine = line.replace("stopsound", "StopSound")
+                    print('Fixing "stopsound" property for ' + classnameVar + ' entity...')
+                    convFile.write(newLine)
+            elif "\"teamToBlock\"" in line or "\"affectsFlow\"" in line:
+                if "func_nav_blocker" in classnameVar:
+                    print('Skipping properties for "func_nav_blocker" entity...')
             else:
                 convFile.write(line)
