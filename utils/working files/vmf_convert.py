@@ -18,17 +18,47 @@ if not os.path.exists(filename):
     quit()
 
 print('Importing', os.path.basename(filename))
-global classnameVar
+global classnameVar, saveLines, savingProces, deletingProces
+deletingProces = 0
+savingProces = 0
 classnameVar = ""
+saveLines = ""
 with open(convertedFilename, 'w') as convFile:
     with open(filename, 'r') as vmfFile:
         for line in vmfFile.readlines():
             splitLine = line.replace('"', '').replace("'", "").split()
             last = len(splitLine) - 1
+			
+            if 1 == savingProces:
+                if "\"classname\"" not in line:
+                    saveLines = saveLines + line
+                    continue
+                
+            if "entity\n" == line:
+                savingProces = 1
+                saveLines = line
+                continue
+			
             if "\"classname\"" in line:
                 classnameVar = splitLine[last]
-                print('Checking ' + str(classnameVar) + ' entity.')
-			
+                if "\"env_cubemap\"" in line or "\"func_areaportal\"" in line or "\"func_areaportalwindow\"" in line:
+                    print(' --> Deleting ' + str(classnameVar) + ' entity.')
+                    deletingProces = 1
+                    savingProces = 0
+                    saveLines = ""
+                    continue
+                else:
+                    print(' --> Checking ' + str(classnameVar) + ' entity.')
+                    convFile.write(saveLines)
+                    deletingProces = 0
+                    savingProces = 0
+                    saveLines = ""
+
+            if 1 == deletingProces:
+                if "}" == line:
+                    deletingProces = 0
+                continue
+
             if "\"uaxis\"" in line:
                 oldVar = splitLine[last]
                 newVar = float(oldVar) * 32
