@@ -41,7 +41,7 @@ with open(convertedFilename, 'w') as convFile:
 			
             if "\"classname\"" in line:
                 classnameVar = splitLine[last]
-                if "\"env_cubemap\"" in line or "\"func_areaportal\"" in line or "\"func_areaportalwindow\"" in line:
+                if "\"shadow_control\"" in line or "\"env_detail_controller\"" in line or "\"postprocess_controller\"" in line or "\"func_areaportal\"" in line or "\"func_areaportalwindow\"" in line:
                     print(' --> Deleting ' + str(classnameVar) + ' entity.')
                     deletingProces = 1
                     savingProces = 0
