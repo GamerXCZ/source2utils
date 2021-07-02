@@ -49,8 +49,29 @@ ObseleteEntities = [
     "\"shadow_control\"", 
     "\"func_fish_pool\"", 
     "\"fish\"", 
+    "\"pet_entity\"", 
     "\"chicken\"", 
-    "\"func_no_defuse\""
+    "\"func_no_defuse\"",
+    "\"env_tonemap_controller_ghost\"", 
+    "\"env_tonemap_controller_infected\"", 
+    "\"prop_mapplaced_long_use_entity\"", 
+    "\"item_dogtags\"", 
+    "\"item_heavyassaultsuit\"", 
+    "\"item_cutters\"", 
+    "\"item_defuser\"", 
+    "\"prop_weapon_upgrade_tablet_droneintel\"", 
+    "\"prop_weapon_upgrade_tablet_highres\"", 
+    "\"prop_weapon_upgrade_tablet_zoneintel\"", 
+    "\"hostage\"",
+    "\"inferno\"",
+    "\"weapon_gascan\"",
+    "\"weapon_zone_repulsor\"",
+    "\"ability_selfdestruct\"",
+    "\"ent_snowball_pile\"",
+    "\"item_assaultsuit\"",
+    "\"item_cash\"",
+    "\"item_coop_coin\"",
+    "_projectile\""
 ]
 if convert_weapons == False:
     ObseleteEntities.append("\"weapon_")
@@ -215,6 +236,14 @@ with open(convertedFilename, 'w') as convFile:
                     print('Fixing "spawnflags" property for ' + classnameVar + ' entity...')
                     newLine = newLine.replace(str(oldVar), str(newVar))
                     convFile.write(newLine)
+                elif "env_tonemap_controller" in classnameVar:
+                    newLine = line.replace("spawnflags", "master")
+                    print('Fixing "spawnflags" property for ' + classnameVar + ' entity...')
+                    convFile.write(newLine)
+                elif "env_fog_controller" in classnameVar:
+                    newLine = line.replace("spawnflags", "IsMaster")
+                    print('Fixing "spawnflags" property for ' + classnameVar + ' entity...')
+                    convFile.write(newLine)
             elif "\"mingpulevel\"" in line:
                 print('Skipping "mingpulevel" property...')
             elif "\"mincpulevel\"" in line:
@@ -284,7 +313,7 @@ with open(convertedFilename, 'w') as convFile:
                 newLine = line.replace(oldVar, "weapon_ar2")
                 print(str(oldVar) + ' -> weapon_ar2')
                 convFile.write(newLine)
-            elif "\"weapon_knife" in line or "\"weapon_bayonet" in line :
+            elif "\"weapon_knife" in line or "\"weapon_bayonet" in line or "\"weapon_hammer\"" in line or "\"weapon_axe\"" in line or "\"weapon_spanner\"" in line or "\"weapon_melee\"" in line:
                 oldVar = splitLine[last]
                 newLine = line.replace(oldVar, "weapon_crowbar")
                 print(str(oldVar) + ' -> weapon_crowbar')
