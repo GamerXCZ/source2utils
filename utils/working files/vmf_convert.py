@@ -2,14 +2,32 @@
 
 import re, sys, os
 
+def parseLine(inputString):
+    inputString = inputString.lower().replace('"', '').replace("'", "").replace("\n", "").replace("\t", "").replace("{", "").replace("}", "").replace(" ", "")
+    return inputString
+
+
 INPUT_FILE_EXT = '.vmf'
 # this leads to the root of the game folder, i.e. dota 2 beta/content/dota_addons/, make sure to remember the final slash!!
 PATH_TO_GAME_CONTENT_ROOT = ""
 PATH_TO_CONTENT_ROOT = ""
     
-print('Source 2 .vmf Prepper! EXPERIMENTAL!! By caseytube via Github')
-print('Converts .vmf files to be ready for Source 2 by fixing materials')
 print('--------------------------------------------------------------------------------------------------------')
+print('Source 2 .vmf Prepper! EXPERIMENTAL!! By "caseytube" and "The [G]amerX" via Github')
+print('Converts .vmf files to be ready for Source 2 by fixing materials and entities')
+print('--------------------------------------------------------------------------------------------------------')
+
+someInput = input("Would you like to convert/delete 'weapon_*' entities?\n - Yes: convert weapons entities\n - No: delete weapons entities\n (y/n):").lower()
+if someInput in "yes":
+    convert_weapons = True
+elif someInput in "no":
+    convert_weapons = False
+elif someInput == "": # debug: casey's favorite default value
+    convert_weapons = True
+else:
+    print("Please respond with 'yes' or 'no.' Quitting process!")
+    quit()
+
 
 filename = sys.argv[1]
 convertedFilename = filename.replace('.vmf', '') + 'Converted.vmf'
@@ -18,11 +36,24 @@ if not os.path.exists(filename):
     quit()
 
 print('Importing', os.path.basename(filename))
-global classnameVar, saveLines, savingProces, deletingProces
+global classnameVar, saveLines, savingProces, deletingProces, ObseleteEntities
 deletingProces = 0
 savingProces = 0
 classnameVar = ""
 saveLines = ""
+ObseleteEntities = [
+    "\"func_areaportal\"", 
+    "\"func_areaportalwindow\"", 
+    "\"postprocess_controller\"", 
+    "\"env_detail_controller\"", 
+    "\"shadow_control\"", 
+    "\"func_fish_pool\"", 
+    "\"fish\"", 
+    "\"chicken\"", 
+    "\"func_no_defuse\""
+]
+if convert_weapons == False:
+    ObseleteEntities.append("\"weapon_")
 with open(convertedFilename, 'w') as convFile:
     with open(filename, 'r') as vmfFile:
         for line in vmfFile.readlines():
@@ -41,7 +72,12 @@ with open(convertedFilename, 'w') as convFile:
 			
             if "\"classname\"" in line:
                 classnameVar = splitLine[last]
-                if "\"func_no_defuse\"" in line or "\"chicken\"" in line or "\"fish\"" in line or "\"func_fish_pool\"" in line or "\"shadow_control\"" in line or "\"env_detail_controller\"" in line or "\"postprocess_controller\"" in line or "\"func_areaportal\"" in line or "\"func_areaportalwindow\"" in line:
+                ForDelete = 0
+                for ObseleteEntity in ObseleteEntities:
+                    if ObseleteEntity in line:
+                        ForDelete = 1
+                        break
+                if ForDelete == 1:
                     print(' --> Deleting ' + str(classnameVar) + ' entity.')
                     deletingProces = 1
                     savingProces = 0
@@ -228,10 +264,44 @@ with open(convertedFilename, 'w') as convFile:
                 newLine = line.replace("point_dz_itemspawn", "item_item_crate")
                 print('point_dz_itemspawn -> item_item_crate')
                 convFile.write(newLine)
+			# start weapon_* entities...
+            elif "\"weapon_deagle\"" in line or "\"weapon_usp" in line or "\"weapon_p250\"" in line or "\"weapon_fiveseven\"" in line or "\"weapon_hpk" in line or "\"weapon_glock" in line:
+                oldVar = splitLine[last]
+                newLine = line.replace(oldVar, "weapon_pistol")
+                print(str(oldVar) + ' -> weapon_pistol')
+                convFile.write(newLine)
+            elif "\"weapon_nova\"" in line or "\"weapon_xm1014\"" in line or "\"weapon_autoshotgun\"" in line or "\"weapon_mag7\"" in line or "\"weapon_sawedoff\"" in line or "\"weapon_m13\"" in line:
+                oldVar = splitLine[last]
+                newLine = line.replace(oldVar, "weapon_shotgun")
+                print(str(oldVar) + ' -> weapon_shotgun')
+                convFile.write(newLine)
+            elif "\"weapon_breachcharge\"" in line:
+                newLine = line.replace("weapon_breachcharge", "item_hlvr_weapon_tripmine")
+                print('weapon_breachcharge -> item_hlvr_weapon_tripmine')
+                convFile.write(newLine)
+            elif "\"weapon_ak47\"" in line or "\"weapon_m4a1" in line or "\"weapon_galil" in line or "\"weapon_famas" in line or "\"weapon_aug" in line:
+                oldVar = splitLine[last]
+                newLine = line.replace(oldVar, "weapon_ar2")
+                print(str(oldVar) + ' -> weapon_ar2')
+                convFile.write(newLine)
+            elif "\"weapon_knife" in line or "\"weapon_bayonet" in line :
+                oldVar = splitLine[last]
+                newLine = line.replace(oldVar, "weapon_crowbar")
+                print(str(oldVar) + ' -> weapon_crowbar')
+                convFile.write(newLine)
+            elif "\"weapon_hegrenade\"" in line:
+                newLine = line.replace("weapon_hegrenade", "weapon_frag")
+                print('weapon_hegrenade -> weapon_frag')
+                convFile.write(newLine)
+            elif "\"weapon_revolver\"" in line:
+                newLine = line.replace("weapon_revolver", "weapon_357")
+                print('weapon_revolver -> weapon_357')
+                convFile.write(newLine)
             elif "\"weapon_healthshot\"" in line:
                 newLine = line.replace("weapon_healthshot", "item_healthvial")
                 print('weapon_healthshot -> item_healthvial')
                 convFile.write(newLine)
+			# end weapon_* entities.
             elif "\"dronegun\"" in line:
                 newLine = line.replace("dronegun", "npc_turret_floor")
                 print('dronegun -> npc_turret_floor')
