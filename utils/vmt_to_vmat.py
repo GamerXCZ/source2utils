@@ -91,7 +91,8 @@ vmtSupportedShaders = [
 "lightmappedtwotexture",    # TODO: Vr Simple 2layer Parallax?
 "lightmappedreflective",    # + Convert to VR Complex
 "decalmodulate",            # TODO: See if this needs extra work
-"cables"                    # TODO: Find appropriate shader or maybe just vr_complex?
+"cables",                   # TODO: Find appropriate shader or maybe just vr_complex?
+"cable"                     # TODO: Find appropriate shader or maybe just vr_complex?
 ]
 ignoreList = [
 "vertexlitgeneric_hdr_dx9",
